@@ -1,7 +1,7 @@
 # restaurant-reservation-backend
 
 # Requirements
-1- node
+1- node 
 2- npm
 3- mysql
 
