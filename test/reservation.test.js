@@ -71,12 +71,12 @@ describe('POST GET /reservation' , ()=>{
                     .catch((err)=>done(err))
                 
     })
-    it('OK, getting reservation has 1 reservation' , (done)=>{
+    it('OK, getting reservation has reservations' , (done)=>{
         request(app).get('/reservation')
                     .then((res) =>{
                         const body = res.body
                         
-                        expect(body.length).to.equal(1)
+                        expect(body.length).to.greaterThan(0)
                         done()  
                     })
                     .catch((err)=>done(err))

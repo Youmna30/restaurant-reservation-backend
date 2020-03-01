@@ -55,7 +55,7 @@ export default {
                 }
               });
             
-            res.status(200).send("Deleted Successfully")
+            res.status(200).send({msg:"Deleted Successfully"})
             
         } catch (error) {
             next(error)

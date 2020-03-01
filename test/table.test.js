@@ -4,7 +4,7 @@ const app = require('../app')
 var db = require('../config/database');  
 
 
-describe('POST GET /table' , ()=>{
+describe('POST GET DElETE /table' , ()=>{
     before((done)=>{
         db.authenticate()
         .then(() => {
@@ -54,15 +54,42 @@ describe('POST GET /table' , ()=>{
                     .catch((err)=>done(err))
                 
     })
-    it('OK, getting tables has 13 tables' , (done)=>{
+    it('OK, getting tables has tables' , (done)=>{
         request(app).get('/table')
                     .then((res) =>{
                         const body = res.body
                         
-                        expect(body.length).to.equal(13)
+                        expect(body.length).to.greaterThan(0)
                         done()  
                     })
                     .catch((err)=>done(err))
                 
+    })
+    it('Fail, Deleting an existing table that has a reservation' , (done)=>{
+        request(app).delete('/table/1')
+                    .then((res) =>{
+                        const body = res.body
+                        expect(body.errors).to.equal("This table has a reservation, you cann't delete it")
+                        done()  
+                    })
+                    .catch((err)=>done(err))
+    })
+    it('OK, Deleting an existing table that hasn\'t a reservation' , (done)=>{
+        request(app).delete('/table/4')
+                    .then((res) =>{
+                        const body = res.body
+                        expect(body.msg).to.equal("Deleted Successfully")
+                        done()  
+                    })
+                    .catch((err)=>done(err))
+    })
+    it('Fail, Deleting a non existing table' , (done)=>{
+        request(app).delete('/table/3')
+                    .then((res) =>{
+                        const body = res.body
+                        expect(body.errors).to.equal("Table isn't found")
+                        done()  
+                    })
+                    .catch((err)=>done(err))
     })
 })
