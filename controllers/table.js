@@ -1,6 +1,7 @@
 import Table from '../models/Table'
 import {body} from 'express-validator'
 import {checkValidations , apiError} from '../config/checkMethod'
+import Reservation from '../models/Reservation'
 
 export default {
     // View all tables
@@ -84,6 +85,12 @@ export default {
             }
             table.availability = true
             await table.save()
+            await Reservation.update({ done: true }, {
+                where: {
+                  table_id: id,
+                  deleted:false
+                }
+              });
             res.status(200).send(table)
         } catch (error) {            
             next(error)

@@ -35,6 +35,10 @@ const Reservation = db.define('Reservation', {
         },
         allowNull: false
     },
+    done:{
+        type:Sequelize.BOOLEAN,
+        defaultValue: false
+    },
     deleted:{
         type:Sequelize.BOOLEAN,
         defaultValue: false
